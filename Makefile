@@ -5,6 +5,7 @@ SRC = main.c fonction.c
 OBJ = $(SRC:.c=.o)
 
 all: $(EXEC)
+	./$(EXEC)
 
 $(EXEC): $(OBJ)
 	$(CC) $(OBJ) -o $(EXEC)
