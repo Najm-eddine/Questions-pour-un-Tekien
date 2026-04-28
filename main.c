@@ -8,7 +8,17 @@ int main() {
     while (mon_choix != 0) {
         montrer_le_menu();
         printf("Votre choix : ");
-        scanf("%d", &mon_choix);
+        
+        // securite pour verifier que l'utilisateur a bien envoyé un nombre
+        if (scanf("%d", &mon_choix) != 1) {
+            while(getchar() != '\n'); // tant qu'on a pas appuyer sur entrée
+            printf(ROUGE "Erreur : Vous devez entrer un nombre !\n" RESET);
+            printf("\nAppuyez sur Entrée pour continuer...");
+            getchar();
+            mon_choix = -1; // on securise pour eviter que l'ordi garde l'ancien chiffre en memoire
+            continue; // remonte au debut du while
+        }
+        // fin de la securite
 
         if (mon_choix == 1) {
             mode_enseignant(mot_de_passe_actuel);
