@@ -37,5 +37,6 @@ void montrer_le_menu();
 void mode_enseignant(char *mot_de_passe);
 void changer_le_mot_de_passe(char *ancien_mot_de_passe);
 void mode_etudiant();
+void creer_qcm();
 
 #endif //fin de verification poiur fichier.h
