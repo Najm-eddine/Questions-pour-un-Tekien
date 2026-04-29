@@ -7,7 +7,7 @@
 
 #define TAILLE 100
 
-/* Couleurs et formes (basées sur tes liens) */
+// Couleurs et forme
 #define ROUGE   "\033[31m"
 #define VERT    "\033[32m"
 #define JAUNE   "\033[33m"

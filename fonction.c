@@ -19,7 +19,7 @@ void changer_le_mot_de_passe(char *mot_de_passe) {
     scanf("%s", nouveau);
     
     strcpy(mot_de_passe, nouveau); // on remplace l'ancien mot de passe par le nouveau
-    printf(VERT "Succès : Mot de passe modifié %s\n" RESET, COEUR);
+    printf(VERT "Succès : Mot de passe modifié \n" RESET);
     
     printf("\nAppuyez sur Entrée pour continuer...");
     getchar(); getchar(); //fait une pause pour pas que l'ecran s'efface direct a cause du systeme clear
@@ -63,6 +63,14 @@ void mode_enseignant(char *mot_de_passe) {
                 getchar(); getchar();
             } else if (choix_prof == 2) {
                 changer_le_mot_de_passe(mot_de_passe);
+                
+                // Sécurité : on force le retour au menu principal après modif du mdp
+                printf(JAUNE "\nDéconnexion automatique pour sécurité..." RESET "\n");
+                printf("Appuyez sur Entrée pour vous reconnecter...");
+                getchar(); 
+                
+                choix_prof = 0; // On casse le while pour sortir de de lespace enseignat et de regagner le menu
+                
             } else if (choix_prof != 0) {
                 // Si c'est un nombre mais pas 0, 1, ni 2
                 printf(ROUGE "Erreur : Ce choix n'existe pas. %s\n" RESET, CARRE);
