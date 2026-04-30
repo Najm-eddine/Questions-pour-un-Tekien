@@ -1,5 +1,3 @@
-#ifndef FICHIER_H //sert a verifier si fichier.h a deja été lus par l'ordi
-#define FICHIER_H //si ca n'a pas été lus alors on le lit maintenant
 
 #include <stdio.h>
 #include <string.h>
@@ -38,5 +36,3 @@ void mode_enseignant(char *mot_de_passe);
 void changer_le_mot_de_passe(char *ancien_mot_de_passe);
 void mode_etudiant();
 void creer_qcm();
-
-#endif //fin de verification poiur fichier.h
