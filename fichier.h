@@ -12,9 +12,9 @@
 #define BLEU    "\033[34m"
 #define RESET   "\033[0m"
 
-#define ETOILE  "★"
-#define CARRE   "■"
-#define COEUR   "❤"
+#define FLOCON  "\u2744"
+#define COMETE   "\u2604"
+#define ETOILE   "\u2728"
 
 // Structure pour une seule question 
 typedef struct {

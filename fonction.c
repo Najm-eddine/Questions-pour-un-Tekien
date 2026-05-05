@@ -3,14 +3,14 @@
 void montrer_le_menu() {
     system("clear"); // efface ce qu'il y avait sur le terminal
     
-    printf(BLEU "╔════════════════════════════════════╗\n" RESET); 
-    printf(BLEU "║" RESET JAUNE "   %s  QUESTIONS POUR UN TEKIEN  %s   " RESET BLEU "║\n" RESET, ETOILE, ETOILE);
-    printf(BLEU "╚════════════════════════════════════╝\n\n" RESET);
+    printf(BLEU "╔══════════════════════════════════╗\n" RESET); 
+    printf(BLEU "║" RESET JAUNE " %s  QUESTIONS POUR UN TEKIEN  %s " RESET BLEU "║\n" RESET, ETOILE, ETOILE);
+    printf(BLEU "╚══════════════════════════════════╝\n\n" RESET);
     
     // choix du mode 
-    printf(VERT "  %s 1." RESET " Mode Enseignant\n", CARRE);
-    printf(VERT "  %s 2." RESET " Mode Etudiant\n", CARRE);
-    printf(ROUGE "  %s 0." RESET " Quitter\n\n", CARRE);
+    printf(VERT "  %s 1." RESET " Mode Enseignant\n", COMETE);
+    printf(VERT "  %s 2." RESET " Mode Etudiant\n", COMETE);
+    printf(ROUGE "  %s 0." RESET " Quitter\n\n", COMETE);
 }
 
 void changer_le_mot_de_passe(char *mot_de_passe) {
@@ -19,7 +19,7 @@ void changer_le_mot_de_passe(char *mot_de_passe) {
     scanf("%s", nouveau);
     
     strcpy(mot_de_passe, nouveau); // on remplace l'ancien mot de passe par le nouveau
-    printf(VERT "Succès : Mot de passe modifié %s\n" RESET, COEUR);
+    printf(VERT "Succès : Mot de passe modifié %s\n" RESET, FLOCON);
     
     printf("\nAppuyez sur Entrée pour continuer...");
     getchar(); getchar(); // Met le programme en pause pour laisser le temps de lire avant que le systeme clear face effet
@@ -121,7 +121,7 @@ void creer_qcm() {
     }
 
     fclose(fichier); 
-    printf(VERT "\n%s Succès : Le fichier '%s' a été enregistré ! %s" RESET "\n", COEUR, nom_fichier, COEUR);
+    printf(VERT "\n%s Succès : Le fichier '%s' a été enregistré ! %s" RESET "\n", FLOCON, nom_fichier, FLOCON);
 
     printf("\nAppuyez sur Entrée pour continuer...");
     while(getchar() != '\n'); getchar(); //ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
@@ -166,7 +166,7 @@ void mode_enseignant(char *mot_de_passe) {
             }
         }
     } else {
-        printf(ROUGE "Acces refuse ! %s\n" RESET, CARRE);
+        printf(ROUGE "Acces refuse ! %s\n" RESET, COMETE);
         printf("\nAppuyez sur Entrée pour revenir au menu...");
         getchar(); getchar(); // Met le programme en pause pour laisser le temps de lire avant que le systeme clear face effet
     }
@@ -174,7 +174,7 @@ void mode_enseignant(char *mot_de_passe) {
 
 void mode_etudiant() {
     system("clear");
-    printf(VERT "Bienvenue etudiant %s" RESET " Choisissez un QCM dans la liste...\n", COEUR);
+    printf(VERT "Bienvenue etudiant %s" RESET " Choisissez un QCM dans la liste...\n", FLOCON);
     /* La lecture des fichiers sera la prochaine étape */
     
     printf("\nAppuyez sur Entrée pour revenir au menu...");
