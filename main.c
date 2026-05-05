@@ -11,7 +11,7 @@ int main() {
         
         // securite pour verifier que l'utilisateur a bien envoyé un nombre
         if (scanf("%d", &mon_choix) != 1) { // scanf("%d", .....) renvoie 1 si c'est bien un nombre
-            while(getchar() != '\n'); // tant qu'on a pas appuyer sur entrée
+            while(getchar() != '\n'); // efface les valeurs du buffer
             printf(ROUGE "Erreur : Vous devez entrer un nombre !\n" RESET);
             printf("\nAppuyez sur Entrée pour continuer...");
             getchar();
