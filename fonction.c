@@ -36,7 +36,7 @@ void creer_qcm() {
     printf(BLEU "--- %s CRÉATION D'UN NOUVEAU QCM %s ---" RESET "\n\n", ETOILE, ETOILE);
 
     //  Réglage du QCM
-    printf(JAUNE "Nom du QCM (sans espaces, ex: Histoire) : " RESET);
+    printf(JAUNE "Nom du QCM (ex: Info) : " RESET);
     scanf("%s", mon_qcm.nom_du_qcm);
     
     sprintf(nom_fichier, "%s.txt", mon_qcm.nom_du_qcm); // on change le nom du fichier 
@@ -175,7 +175,6 @@ void mode_enseignant(char *mot_de_passe) {
 void mode_etudiant() {
     system("clear");
     printf(VERT "Bienvenue etudiant %s" RESET " Choisissez un QCM dans la liste...\n", FLOCON);
-    /* La lecture des fichiers sera la prochaine étape */
     
     printf("\nAppuyez sur Entrée pour revenir au menu...");
     getchar(); getchar();
