@@ -91,13 +91,13 @@ void creer_qcm() {
         printf("Texte de la question : ");
         while(getchar() != '\n'); // ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
         fgets(q.texte_question, 300, stdin); // lit depuis la question depuis  clavier(stdin) car le fichier vient d'être créé en écriture ("w") et il est encore vide
-        q.texte_question[strcspn(q.texte_question, "\n")] = 0; // Nettoie la phrase en remplaçant le retour à la ligne a la fin par  par un caractère de fin de chaîne (\0)
+        
 
         //sert à créer les choix de reponses que l'étudiant verra
         for (int j = 0; j < 4; j++) { // on répète 4 fois car 4 reponses max
             printf("  Réponse %d : ", j + 1);
             fgets(q.choix[j], 100, stdin);
-            q.choix[j][strcspn(q.choix[j], "\n")] = 0;
+          
         }
 
         // Sécurité Solution
@@ -113,9 +113,9 @@ void creer_qcm() {
         }
 
         // Enfin, on affiche dans le fichier la question , les differentes possibilités et la solution
-        fprintf(fichier, "%s\n", q.texte_question);
+        fprintf(fichier, "%s", q.texte_question);
         for(int j = 0; j < 4; j++) {
-            fprintf(fichier, "%s\n", q.choix[j]);
+            fprintf(fichier, "%s", q.choix[j]);
         }
         fprintf(fichier, "%d\n", q.solution);
     }
@@ -212,14 +212,14 @@ void mode_etudiant() {
 
     // remplissage du tableau avec les donné du fichier
     for (int i = 0; i < nb_questions; i++) {
-        fgetc(fichier); // supprime le \n qui est derrier eles chiffres afin de ne pas créer de décalage
+        fgetc(fichier); // supprime le \n qui est derrier eles chiffres afin de ne pas créer de décalage car fgets s'arrête dès qu'il rencontre un \n donc il le saute 
         
         fgets(liste[i].texte_question, 300, fichier);
-        liste[i].texte_question[strcspn(liste[i].texte_question, "\n")] = 0;
+        
 
         for (int j = 0; j < 4; j++) {
             fgets(liste[i].choix[j], 100, fichier);
-            liste[i].choix[j][strcspn(liste[i].choix[j], "\n")] = 0;
+            
         }
         fscanf(fichier, "%d", &liste[i].solution);
     }
@@ -255,12 +255,14 @@ void mode_etudiant() {
         }
         
         printf("\nAppuyez sur Entrée pour la suite...");
-        while(getchar() != '\n'); getchar();
+        while(getchar() != '\n'); getchar(); ////ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
     }
 
     // 5. RÉSULTAT FINAL
     system("clear");
-    if (score < 0) score = 0; // On ne donne pas de note en dessous de zéro
+    if (score < 0){
+        score = 0;
+    } // On ne donne pas de note en dessous de zéro
     
     printf(JAUNE "╔════════════════════════════════════╗\n" RESET);
     printf(JAUNE "║          RÉSULTAT DU QCM           ║\n" RESET);
