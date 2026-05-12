@@ -1,8 +1,9 @@
 #include "fichier.h"
 
+
 int main() {
     int mon_choix = -1;
-    // j'ai stocké le mdp ici pour éviter les variable globale
+    
     char mot_de_passe_actuel[TAILLE] = "tekien2026";
 
     while (mon_choix != 0) {
@@ -16,17 +17,18 @@ int main() {
             printf("\nAppuyez sur Entrée pour continuer...");
             getchar();
             mon_choix = -1; // on securise pour eviter que l'ordi garde l'ancien chiffre en memoire
-            continue; // remonte au debut du while
         }
-        // fin de la securite
-
-        if (mon_choix == 1) {
+        
+        else if (mon_choix == 1) {
             mode_enseignant(mot_de_passe_actuel);
-        } else if (mon_choix == 2) {
+        } 
+        else if (mon_choix == 2) {
             mode_etudiant();
-        } else if (mon_choix == 0) {
+        } 
+        else if (mon_choix == 0) {
             printf(JAUNE "Fin du programme. Au revoir ! %s\n" RESET, ETOILE);
-        } else {
+        } 
+        else {
             printf(ROUGE "Erreur : Ce choix n'existe pas.\n" RESET);
             
             // On ajoute aussi la pause ici pour que l'utilisateur voit l'erreur

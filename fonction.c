@@ -172,10 +172,105 @@ void mode_enseignant(char *mot_de_passe) {
     }
 }
 
+
+
 void mode_etudiant() {
+    char nom_qcm[TAILLE];
+    char nom_fichier[TAILLE + 4];
+    FILE *fichier;
+    ReglagesQcm reglages;
+    int nb_questions;
+    float score = 0;
+
     system("clear");
-    printf(VERT "Bienvenue etudiant %s" RESET " Choisissez un QCM dans la liste...\n", FLOCON);
+    printf(VERT "--- %s BIENVENUE ESPACE ÉTUDIANT %s ---" RESET "\n\n", FLOCON, FLOCON);
     
-    printf("\nAppuyez sur Entrée pour revenir au menu...");
-    getchar(); getchar();
+    printf(JAUNE "Entrez le nom du QCM à passer  : " RESET);
+    scanf("%s", nom_qcm);
+    sprintf(nom_fichier, "%s.txt", nom_qcm);
+
+    fichier = fopen(nom_fichier, "r");
+    if (fichier == NULL) {
+        printf(ROUGE "Erreur : Le QCM '%s' n'existe pas.\n" RESET, nom_qcm);
+        printf("\nAppuyez sur Entrée pour revenir au menu...");
+        while(getchar() != '\n'); getchar(); //ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
+        return;
+    }
+
+    //  On lit les réglages au début du fichier 
+    fscanf(fichier, "%d", &reglages.points_negatifs);
+    fscanf(fichier, "%d", &reglages.mode_sequentiel);
+    fscanf(fichier, "%d", &nb_questions); //nb question va nous servire a l'allocation dynamique
+
+    //  On crée le tableau de la taille exacte du nombre de questions
+    UneQuestion *liste = malloc(nb_questions *sizeof(UneQuestion));
+    if (liste == NULL) {
+        printf(ROUGE "Impossible de charger les questions.\n" RESET);
+        fclose(fichier);
+        return;
+    }
+
+    // remplissage du tableau avec les donné du fichier
+    for (int i = 0; i < nb_questions; i++) {
+        fgetc(fichier); // supprime le \n qui est derrier eles chiffres afin de ne pas créer de décalage
+        
+        fgets(liste[i].texte_question, 300, fichier);
+        liste[i].texte_question[strcspn(liste[i].texte_question, "\n")] = 0;
+
+        for (int j = 0; j < 4; j++) {
+            fgets(liste[i].choix[j], 100, fichier);
+            liste[i].choix[j][strcspn(liste[i].choix[j], "\n")] = 0;
+        }
+        fscanf(fichier, "%d", &liste[i].solution);
+    }
+    fclose(fichier); // On a tout en mémoire, on peut fermer le fichier
+
+    //  On pose les questions à l'étudiant
+    float points_par_question = 20.0 / nb_questions; // La note doit être sur 20 
+
+    for (int i = 0; i < nb_questions; i++) {
+        int reponse_eleve = -1;
+        system("clear");
+        printf(BLEU "Question %d / %d : %s" RESET "\n\n", i + 1, nb_questions, liste[i].texte_question);
+        
+        for (int j = 0; j < 4; j++) {
+            printf("  %d. %s\n", j + 1, liste[i].choix[j]);
+        }
+
+        printf(JAUNE "\nVotre réponse (1-4) : " RESET);
+        while (scanf("%d", &reponse_eleve) != 1 || reponse_eleve < 1 || reponse_eleve > 4) {
+            while(getchar() != '\n');
+            printf(ROUGE "Erreur : Choisissez entre 1 et 4 !\n" RESET);
+            printf(JAUNE "Votre réponse (1-4) : " RESET);
+        }
+
+        if (reponse_eleve == liste[i].solution) {
+            printf(VERT "\nBonne réponse ! %s\n" RESET, ETOILE);
+            score += points_par_question;
+        } else {
+            printf(ROUGE "\nMauvaise réponse... %s\n" RESET, COMETE);
+            if (reglages.points_negatifs == 1) {
+                score -= (points_par_question / 2); //on enleve la moitié des poins de la questions si la reponses est fausse
+            }
+        }
+        
+        printf("\nAppuyez sur Entrée pour la suite...");
+        while(getchar() != '\n'); getchar();
+    }
+
+    // 5. RÉSULTAT FINAL
+    system("clear");
+    if (score < 0) score = 0; // On ne donne pas de note en dessous de zéro
+    
+    printf(JAUNE "╔════════════════════════════════════╗\n" RESET);
+    printf(JAUNE "║          RÉSULTAT DU QCM           ║\n" RESET);
+    printf(JAUNE "╚════════════════════════════════════╝\n\n" RESET);
+    printf("  QCM : %s\n", nom_qcm);
+    printf("  Note finale : " VERT "%.2f / 20" RESET "\n\n", score);
+
+    
+    free(liste); 
+
+    printf("Appuyez sur Entrée pour revenir au menu...");
+    getchar();
 }
