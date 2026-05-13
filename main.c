@@ -4,7 +4,7 @@
 int main() {
     int mon_choix = -1;
     
-    char mot_de_passe_actuel[TAILLE] = "tekien2026";
+    char mot_de_passe_actuel[TAILLE] = "tekien";
 
     while (mon_choix != 0) {
         montrer_le_menu();

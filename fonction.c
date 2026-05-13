@@ -223,10 +223,10 @@ void mode_etudiant() {
         }
         fscanf(fichier, "%d", &liste[i].solution);
     }
-    fclose(fichier); // On a tout en mémoire, on peut fermer le fichier
+    fclose(fichier); 
 
     //  On pose les questions à l'étudiant
-    float points_par_question = 20.0 / nb_questions; // La note doit être sur 20 
+    float points_par_question = 20.0 / nb_questions; // note sur 20
 
     for (int i = 0; i < nb_questions; i++) {
         int reponse_eleve = -1;
@@ -255,10 +255,10 @@ void mode_etudiant() {
         }
         
         printf("\nAppuyez sur Entrée pour la suite...");
-        while(getchar() != '\n'); getchar(); ////ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
+        while(getchar() != '\n'); getchar(); //ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
     }
 
-    // 5. RÉSULTAT FINAL
+    
     system("clear");
     if (score < 0){
         score = 0;
