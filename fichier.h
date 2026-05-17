@@ -20,7 +20,7 @@
 typedef struct {
     char texte_question[300];
     char choix[4][100];
-    int solution; 
+    int solution;
 } UneQuestion;
 
 // Structure pour les réglages du QCM

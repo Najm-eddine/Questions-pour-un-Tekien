@@ -1,13 +1,26 @@
 #include "fichier.h"
 
 void montrer_le_menu() {
-    system("clear"); // efface ce qu'il y avait sur le terminal
+    system("clear"); 
     
-    printf(BLEU "╔══════════════════════════════════╗\n" RESET); 
-    printf(BLEU "║" RESET JAUNE " %s  QUESTIONS POUR UN TEKIEN  %s " RESET BLEU "║\n" RESET, ETOILE, ETOILE);
-    printf(BLEU "╚══════════════════════════════════╝\n\n" RESET);
+    printf(BLEU "╔═══════════════════════════════════════════════╗\n" RESET); 
+    printf(BLEU "║ " RESET JAUNE "            %s  MENU PRINCIPAL  %s           " RESET BLEU " ║\n" RESET, ETOILE, ETOILE);
+    printf(BLEU "╠═══════════════════════════════════════════════╣\n" RESET); 
+    printf(BLEU "║ " JAUNE "  ___                  _   _                 " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE " / _ \\ _   _  ___  ___| |_(_) ___  _ __  ___ " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "| | | | | | |/ _ \\/ __| __| |/ _ \\| '_ \\/ __|" BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "| |_| | |_| |  __/\\__ \\ |_| | (_) | | | \\__ \\" BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE " \\__\\_\\__,_|\\___||___/\\__|_|\\___/|_| |_|___/ " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "            |  _ \\ ___  _   _ _ __           " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "            | |_) / _ \\| | | | '__|          " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "            |  __/ (_) | |_| | |             " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "   _   _    |_|  _\\___/ \\__,_|_|             " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "  | | | |_ __   |_   _|__| | _(_) ___ _ __   " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "  | | | | '_ \\    | |/ _ \\ |/ / |/ _ \\ '_ \\  " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "  | |_| | | | |   | |  __/   <| |  __/ | | | " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "   \\___/|_| |_|   |_|\\___|_|\\_\\_|\\___|_| |_| " BLEU " ║\n" RESET);
+    printf(BLEU "╚═══════════════════════════════════════════════╝\n\n" RESET);
     
-    // choix du mode 
     printf(VERT "  %s 1." RESET " Mode Enseignant\n", COMETE);
     printf(VERT "  %s 2." RESET " Mode Etudiant\n", COMETE);
     printf(ROUGE "  %s 0." RESET " Quitter\n\n", COMETE);
@@ -36,10 +49,24 @@ void creer_qcm() {
     printf(BLEU "--- %s CRÉATION D'UN NOUVEAU QCM %s ---" RESET "\n\n", ETOILE, ETOILE);
 
     //  Réglage du QCM
-    printf(JAUNE "Nom du QCM (ex: Info) : " RESET);
+    printf(JAUNE "Nom du QCM (ex: Calculs) : " RESET);
     scanf("%s", mon_qcm.nom_du_qcm);
     
     sprintf(nom_fichier, "%s.txt", mon_qcm.nom_du_qcm); // on change le nom du fichier 
+
+    // choix de la catégorie
+    int choix_cat = -1;
+    printf(JAUNE "\nDans quelle catégorie classer ce QCM ?\n" RESET);
+    printf("  1. Informatique\n");
+    printf("  2. Mathématiques\n");
+    printf("  3. Divers\n");
+    printf(JAUNE "\nVotre choix (1-3) : " RESET);
+    while (scanf("%d", &choix_cat) != 1 || choix_cat < 1 || choix_cat > 3) {
+        while(getchar() != '\n');
+        printf(ROUGE "Erreur : Choisissez un nombre entre 1 et 3 !\n" RESET);
+        printf(JAUNE "Votre choix (1-3) : " RESET);
+    }
+    while(getchar() != '\n');
 
     // Sécurité Points Négatifs avec Clear
     printf(JAUNE "Points négatifs ? (1: Oui / 0: Non) : " RESET);
@@ -77,6 +104,23 @@ void creer_qcm() {
         while(getchar() != '\n'); getchar(); //ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
         return;
     }
+    
+    
+    FILE *f_cat = NULL;
+    if (choix_cat == 1) {
+        f_cat = fopen("cat_informatique.txt", "a");
+    } 
+    else if (choix_cat == 2) {
+        f_cat = fopen("cat_mathematique.txt", "a");
+    } 
+    else if (choix_cat == 3) {
+        f_cat = fopen("cat_divers.txt", "a");
+    }
+
+    if (f_cat != NULL) {
+        fprintf(f_cat, "%s\n", mon_qcm.nom_du_qcm);
+        fclose(f_cat);
+    }
 
     // on ecrit les infos dans le fichier pour pouvoir les traiter plus tard
     fprintf(fichier, "%d\n", mon_qcm.points_negatifs);
@@ -107,7 +151,9 @@ void creer_qcm() {
             system("clear"); // On nettoie
             printf(VERT "--- Question n°%d / %d ---" RESET "\n", i + 1, nb_questions);
             printf("Question : %s\n", q.texte_question);
-            for(int k=0; k<4; k++) printf("  %d. %s\n", k+1, q.choix[k]);
+            for(int k=0; k<4; k++){ 
+                printf("  %d. %s\n", k+1, q.choix[k]);
+            }
             printf(ROUGE "\nErreur : Choisissez un chiffre entre 1 et 4 !\n" RESET);
             printf(JAUNE "Numéro de la bonne réponse (1 à 4) : " RESET);
         }
@@ -173,17 +219,58 @@ void mode_enseignant(char *mot_de_passe) {
 }
 
 
-
 void mode_etudiant() {
     char nom_qcm[TAILLE];
     char nom_fichier[TAILLE + 4];
     FILE *fichier;
     ReglagesQcm reglages;
     int nb_questions;
-    float score = 0;
+    float note= 0;
 
     system("clear");
     printf(VERT "--- %s BIENVENUE ESPACE ÉTUDIANT %s ---" RESET "\n\n", FLOCON, FLOCON);
+
+    
+    int choix_cat = -1;
+    printf(JAUNE "Choisissez une catégorie pour voir les QCM disponibles :\n" RESET);
+    printf("  1. Informatique\n");
+    printf("  2. Mathématiques\n");
+    printf("  3. Divers\n");
+    printf(JAUNE "\nVotre choix (1-3) : " RESET);
+    
+    while (scanf("%d", &choix_cat) != 1 || choix_cat < 1 || choix_cat > 3) {
+        while(getchar() != '\n');
+        printf(ROUGE "Erreur : Choisissez un nombre entre 1 et 3 !\n" RESET);
+        printf(JAUNE "Votre choix (1-3) : " RESET);
+    }
+    while(getchar() != '\n');
+
+    system("clear");
+    printf(VERT "    %s QCM DISPONIBLES %s    " RESET "\n\n", ETOILE, ETOILE);
+    
+    
+    FILE *f_liste = NULL;
+    if (choix_cat == 1) {
+        f_liste = fopen("cat_informatique.txt", "r");
+    }
+    else if (choix_cat == 2) {
+        f_liste = fopen("cat_mathematique.txt", "r");
+    }
+    else if (choix_cat == 3) {
+        f_liste = fopen("cat_divers.txt", "r");
+    }
+
+    // On affiche la liste des QCM
+    if (f_liste == NULL) {
+        printf(ROUGE "Aucun QCM n'est encore enregistré dans cette catégorie.\n\n" RESET);
+    } else {
+        char nom_dispo[TAILLE];
+        while (fgets(nom_dispo, sizeof(nom_dispo), f_liste)) {
+            printf("  %s  %s", FLOCON, nom_dispo);
+        }
+        fclose(f_liste);
+        printf("\n");
+    }
     
     printf(JAUNE "Entrez le nom du QCM à passer  : " RESET);
     scanf("%s", nom_qcm);
@@ -231,26 +318,45 @@ void mode_etudiant() {
     for (int i = 0; i < nb_questions; i++) {
         int reponse_eleve = -1;
         system("clear");
+        
         printf(BLEU "Question %d / %d : %s" RESET "\n\n", i + 1, nb_questions, liste[i].texte_question);
+
+        printf(JAUNE "  [%.2f points ]\n\n" RESET, points_par_question);
         
         for (int j = 0; j < 4; j++) {
             printf("  %d. %s\n", j + 1, liste[i].choix[j]);
         }
 
-        printf(JAUNE "\nVotre réponse (1-4) : " RESET);
-        while (scanf("%d", &reponse_eleve) != 1 || reponse_eleve < 1 || reponse_eleve > 4) {
-            while(getchar() != '\n');
-            printf(ROUGE "Erreur : Choisissez entre 1 et 4 !\n" RESET);
-            printf(JAUNE "Votre réponse (1-4) : " RESET);
+        // Si le mode séquentiel est obligatoire (1), on force entre 1 et 4
+        if (reglages.mode_sequentiel == 1) {
+            printf(JAUNE "\nVotre réponse (1-4) : " RESET);
+            while (scanf("%d", &reponse_eleve) != 1 || reponse_eleve < 1 || reponse_eleve > 4) {
+                while(getchar() != '\n');
+                printf(ROUGE "Erreur : Choisissez entre 1 et 4 !\n" RESET);
+                printf(JAUNE "Votre réponse (1-4) : " RESET);
+            }
+        } 
+        // Sinon, on ajoute le 0 pour pouvoir sauter la question
+        else {
+            printf(JAUNE "\nVotre réponse (0-4) (0 pour passer) : " RESET);
+            while (scanf("%d", &reponse_eleve) != 1 || reponse_eleve < 0 || reponse_eleve > 4) {
+                while(getchar() != '\n');
+                printf(ROUGE "Erreur : Choisissez entre 0 et 4 !\n" RESET);
+                printf(JAUNE "Votre réponse (0-4) (0 pour passer) : " RESET);
+            }
         }
 
-        if (reponse_eleve == liste[i].solution) {
+        // Si l'élève a tapé 0, on saute la question sans toucher a la note
+        if (reponse_eleve == 0) {
+            printf(JAUNE "\nQuestion sautée.\n" RESET);
+        }
+        else if (reponse_eleve == liste[i].solution) {
             printf(VERT "\nBonne réponse ! %s\n" RESET, ETOILE);
-            score += points_par_question;
+            note += points_par_question;
         } else {
             printf(ROUGE "\nMauvaise réponse... %s\n" RESET, COMETE);
             if (reglages.points_negatifs == 1) {
-                score -= (points_par_question / 2); //on enleve la moitié des poins de la questions si la reponses est fausse
+                note -= (points_par_question / 2); //on enleve la moitié des poins de la questions si la reponses est fausse
             }
         }
         
@@ -260,15 +366,15 @@ void mode_etudiant() {
 
     
     system("clear");
-    if (score < 0){
-        score = 0;
+    if (note < 0){
+        note = 0;
     } // On ne donne pas de note en dessous de zéro
     
     printf(JAUNE "╔════════════════════════════════════╗\n" RESET);
     printf(JAUNE "║          RÉSULTAT DU QCM           ║\n" RESET);
     printf(JAUNE "╚════════════════════════════════════╝\n\n" RESET);
     printf("  QCM : %s\n", nom_qcm);
-    printf("  Note finale : " VERT "%.2f / 20" RESET "\n\n", score);
+    printf("  Note finale : " VERT "%.2f / 20" RESET "\n\n", note);
 
     
     free(liste); 
