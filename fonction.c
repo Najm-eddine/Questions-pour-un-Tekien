@@ -183,7 +183,17 @@ void mode_enseignant(char *mot_de_passe) {
     if (strcmp(essai, mot_de_passe) == 0) {
         while (choix_prof != 0) {
             system("clear");
-            printf("\n" BLEU "--- %s ESPACE ENSEIGNANT %s ---" RESET "\n", ETOILE, ETOILE);
+            printf(BLEU "╔══════════════════════════════════════════════════════════════╗\n" RESET);
+            printf(BLEU "║ " JAUNE " _____ ____  ____   _    ____ _____                         " BLEU " ║\n" RESET);
+            printf(BLEU "║ " JAUNE "| ____/ ___||  _ \\ / \\  / ___| ____|                        " BLEU " ║\n" RESET);
+            printf(BLEU "║ " JAUNE "|  _| \\___ \\| |_) / _ \\| |   |  _|                          " BLEU " ║\n" RESET);
+            printf(BLEU "║ " JAUNE "| |___ ___) |  __/ ___ \\ |___| |___                         " BLEU " ║\n" RESET);
+            printf(BLEU "║ " JAUNE "|_____|____/|_|_/_/___\\_\\____|_____|  _    _    _   _ _____ " BLEU " ║\n" RESET);
+            printf(BLEU "║ " JAUNE "| ____| \\ | / ___|| ____|_ _/ ___| \\ | |  / \\  | \\ | |_   _|" BLEU " ║\n" RESET);
+            printf(BLEU "║ " JAUNE "|  _| |  \\| \\___ \\|  _|  | | |  _|  \\| | / _ \\ |  \\| | | |  " BLEU " ║\n" RESET);
+            printf(BLEU "║ " JAUNE "| |___| |\\  |___) | |___ | | |_| | |\\  |/ ___ \\| |\\  | | |  " BLEU " ║\n" RESET);
+            printf(BLEU "║ " JAUNE "|_____|_| \\_|____/|_____|___\\____|_| \\_/_/   \\_\\_| \\_| |_|  " BLEU " ║\n" RESET);
+            printf(BLEU "╚══════════════════════════════════════════════════════════════╝\n\n" RESET);
             printf("1. Creer un QCM\n");
             printf("2. Modifier le mot de passe\n");
             printf(ROUGE "0. Retour" RESET "\n");
@@ -228,7 +238,17 @@ void mode_etudiant() {
     float note= 0;
 
     system("clear");
-    printf(VERT "--- %s BIENVENUE ESPACE ÉTUDIANT %s ---" RESET "\n\n", FLOCON, FLOCON);
+    printf(BLEU "╔══════════════════════════════════════════════════╗\n" RESET);
+    printf(BLEU "║ " JAUNE " _____ ____  ____   _    ____ _____             " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "| ____/ ___||  _ \\ / \\  / ___| ____|            " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "|  _| \\___ \\| |_) / _ \\| |   |  _|              " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "| |___ ___) |  __/ ___ \\ |___| |___             " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "|_____|____/|_| /_/___\\_\\____|_____|_   _ _____ " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "| ____|_   _| | | |  _ \\_ _|  / \\  | \\ | |_   _|" BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "|  _|   | | | | | | | | | |  / _ \\ |  \\| | | |  " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "| |___  | | | |_| | |_| | | / ___ \\| |\\  | | |  " BLEU " ║\n" RESET);
+    printf(BLEU "║ " JAUNE "|_____| |_|  \\___/|____/___/_/   \\_\\_| \\_| |_|  " BLEU " ║\n" RESET);
+    printf(BLEU "╚══════════════════════════════════════════════════╝\n\n" RESET);
 
     
     int choix_cat = -1;
@@ -321,7 +341,7 @@ void mode_etudiant() {
         
         printf(BLEU "Question %d / %d : %s" RESET "\n\n", i + 1, nb_questions, liste[i].texte_question);
 
-        printf(JAUNE "  [%.2f points ]\n\n" RESET, points_par_question);
+        printf(JAUNE "  [%.2f pt ]\n\n" RESET, points_par_question);
         
         for (int j = 0; j < 4; j++) {
             printf("  %d. %s\n", j + 1, liste[i].choix[j]);
@@ -370,9 +390,13 @@ void mode_etudiant() {
         note = 0;
     } // On ne donne pas de note en dessous de zéro
     
-    printf(JAUNE "╔════════════════════════════════════╗\n" RESET);
-    printf(JAUNE "║          RÉSULTAT DU QCM           ║\n" RESET);
-    printf(JAUNE "╚════════════════════════════════════╝\n\n" RESET);
+    printf(BLEU "╔═══════════════════════════════════════════════════════════════════════════════╗\n" RESET);
+    printf(BLEU "║ " JAUNE " ____  _____ ____  _   _ _   _____  _  _____    _____ ___ _   _    _    _   " BLEU "  ║\n" RESET);
+    printf(BLEU "║ " JAUNE "|  _ \\| ____/ ___|| | | | | |_   _|/ \\|_   _|  |  ___|_ _| \\ | |  / \\  | |    " BLEU "║\n" RESET);
+    printf(BLEU "║ " JAUNE "| |_) |  _| \\___ \\| | | | |   | | / _ \\ | |    | |_   | ||  \\| | / _ \\ | |    " BLEU "║\n" RESET);
+    printf(BLEU "║ " JAUNE "|  _ <| |___ ___) | |_| | |___| |/ ___ \\| |    |  _|  | || |\\  |/ ___ \\| |___ " BLEU "║\n" RESET);
+    printf(BLEU "║ " JAUNE "|_| \\_\\_____|____/ \\___/|_____|_/_/   \\_\\_|    |_|   |___|_| \\_/_/   \\_\\_____|"BLEU "║\n" RESET);
+    printf(BLEU "╚═══════════════════════════════════════════════════════════════════════════════╝\n\n" RESET);
     printf("  QCM : %s\n", nom_qcm);
     printf("  Note finale : " VERT "%.2f / 20" RESET "\n\n", note);
 
