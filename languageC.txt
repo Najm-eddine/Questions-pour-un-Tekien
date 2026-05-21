@@ -1,0 +1,63 @@
+0
+0
+10
+Comment déclare-t-on un pointeur vers un entier en C ?
+int ptr;
+int *ptr;
+ptr *int;
+*int ptr;
+2
+Quelle fonction est utilisée pour allouer dynamiquement de la mémoire ?
+malloc()
+free()
+alloc()
+memory()
+1
+Que signifie l'acronyme EOF en langage C ?
+Error Of File
+Empty Of File
+End Of File
+End Of Function
+3
+Quel est le résultat de l'opérateur == en C ?
+Une affectation de valeur
+Une comparaison d'égalité
+Une multiplication
+Une soustraction
+2
+Quelle bibliothèque faut-il inclure pour utiliser printf() ?
+<stdlib.h>
+<string.h>
+<stdio.h>
+<math.h>
+3
+Comment accède-t-on à un membre d'une structure via un pointeur ?
+Avec un point (.)
+Avec une flèche (->)
+Avec des crochets ([])
+Avec une virgule (,)
+2
+Que fait la fonction fgets() ?
+Elle affiche du texte
+Elle lit une ligne de texte
+Elle supprime un fichier
+Elle calcule une taille
+2
+Quelle est la taille approximative d'un type int sur un système moderne ?
+1 octet
+2 octets
+4 octets
+8 octets
+3
+Quel est l'opérateur de différence en C ?
+!=
+==
+<>
+/=
+1
+Comment libérer la mémoire allouée dynamiquement ?
+delete()
+clear()
+free()
+remove()
+3

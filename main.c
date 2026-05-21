@@ -11,14 +11,15 @@ int main() {
         printf("Votre choix : ");
         
         // securite pour verifier que l'utilisateur a bien envoyé un nombre
-        if (scanf("%d", &mon_choix) != 1) { // scanf("%d", .....) renvoie 1 si c'est bien un nombre
-            while(getchar() != '\n'); //efface les valeurs du buffer
+        if (scanf("%d", &mon_choix) != 1) {
+            while(getchar() != '\n');
             printf(ROUGE "Erreur : Vous devez entrer un nombre !\n" RESET);
             printf("\nAppuyez sur Entrée pour continuer...");
             getchar();
             mon_choix = -1; // on securise pour eviter que l'ordi garde l'ancien chiffre en memoire
         }
         
+        //choix de l'utilisateur
         else if (mon_choix == 1) {
             mode_enseignant(mot_de_passe_actuel);
         } 
@@ -30,8 +31,6 @@ int main() {
         } 
         else {
             printf(ROUGE "Erreur : Ce choix n'existe pas.\n" RESET);
-            
-            // On ajoute aussi la pause ici pour que l'utilisateur voit l'erreur
             printf("\nAppuyez sur Entrée pour continuer...");
             getchar(); getchar();
         }

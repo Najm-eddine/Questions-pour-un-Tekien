@@ -1,0 +1,63 @@
+0
+1
+10
+Combien de fois l'équipe de France a-t-elle remporté la Coupe du Monde ?
+1
+2
+3
+4
+2
+Quelle équipe a remporté la Coupe du Monde 2018 ?
+Brésil
+Allemagne
+France
+Croatie
+3
+Qui détient le record du nombre de Ballons d'Or ?
+Cristiano Ronaldo
+Zinedine Zidane
+Lionel Messi
+Ronaldo
+3
+Quel pays a remporté le plus de Coupes du Monde ?
+Allemagne
+Italie
+Argentine
+Brésil
+4
+Combien de temps dure un match de football réglementaire ?
+80 minutes
+90 minutes
+100 minutes
+120 minutes
+2
+Quel est le surnom de l'équipe de France de football ?
+Les Bleus
+Les Tricolores
+Les Coqs
+Les Gaulois
+1
+Dans quelle ville se trouve le stade Santiago Bernabéu ?
+Barcelone
+Paris
+Madrid
+Londres
+3
+Quelle est la compétition européenne de clubs la plus prestigieuse ?
+La Ligue Europa
+La Ligue des Champions
+La Coupe de l'UEFA
+La Super Coupe
+2
+Combien de cartons jaunes entraînent une expulsion directe ?
+1
+2
+3
+4
+2
+Quel joueur a marqué le but de la victoire en finale de la Coupe du Monde 1998 ?
+Zinedine Zidane
+Thierry Henry
+Emmanuel Petit
+David Trezeguet
+3

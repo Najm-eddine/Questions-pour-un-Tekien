@@ -1,5 +1,6 @@
 #include "fichier.h"
 
+// Affiche le menu principal avec une interface graphique en ASCII et des codes couleurs
 void montrer_le_menu() {
     system("clear"); 
     
@@ -26,24 +27,26 @@ void montrer_le_menu() {
     printf(ROUGE "  %s 0." RESET " Quitter\n\n", COMETE);
 }
 
+// Remplace l'ancien mot de passe par le nouveau en utilisant la fonction strcpy().
 void changer_le_mot_de_passe(char *mot_de_passe) {
     char nouveau[TAILLE];
     printf(JAUNE "Entrez le nouveau mot de passe : " RESET);
     scanf("%s", nouveau);
     
-    strcpy(mot_de_passe, nouveau); // on remplace l'ancien mot de passe par le nouveau
+    strcpy(mot_de_passe, nouveau);
     printf(VERT "Succès : Mot de passe modifié %s\n" RESET, FLOCON);
     
     printf("\nAppuyez sur Entrée pour continuer...");
-    getchar(); getchar(); // Met le programme en pause pour laisser le temps de lire avant que le systeme clear face effet
+    getchar(); getchar();
 }
 
+// Fonction principale de création de QCM
 void creer_qcm() {
     ReglagesQcm mon_qcm;
     UneQuestion q;
     int nb_questions;
     FILE *fichier; 
-    char nom_fichier[TAILLE + 4]; // le + 4 c'est pour le .txt qu'on rajoute apres le nom du fichier
+    char nom_fichier[TAILLE + 4];
 
     system("clear");
     printf(BLEU "--- %s CRÉATION D'UN NOUVEAU QCM %s ---" RESET "\n\n", ETOILE, ETOILE);
@@ -52,7 +55,7 @@ void creer_qcm() {
     printf(JAUNE "Nom du QCM (ex: Calculs) : " RESET);
     scanf("%s", mon_qcm.nom_du_qcm);
     
-    sprintf(nom_fichier, "%s.txt", mon_qcm.nom_du_qcm); // on change le nom du fichier 
+    sprintf(nom_fichier, "%s.txt", mon_qcm.nom_du_qcm);
 
     // choix de la catégorie
     int choix_cat = -1;
@@ -70,42 +73,42 @@ void creer_qcm() {
 
     // Sécurité Points Négatifs avec Clear
     printf(JAUNE "Points négatifs ? (1: Oui / 0: Non) : " RESET);
-    while (scanf("%d", &mon_qcm.points_negatifs) != 1 || (mon_qcm.points_negatifs != 0 && mon_qcm.points_negatifs != 1)) { // scanf("%d", .....) renvoie 1 si c'est bien un nombre
+    while (scanf("%d", &mon_qcm.points_negatifs) != 1 || (mon_qcm.points_negatifs != 0 && mon_qcm.points_negatifs != 1)) { 
         while(getchar() != '\n'); 
-        system("clear"); // On efface la pile d'erreurs
+        system("clear");
         printf(ROUGE "Erreur : Tapez 0 ou 1 uniquement !\n" RESET);
         printf(JAUNE "Points négatifs ? (1: Oui / 0: Non) : " RESET);
     }
 
     // Sécurité Mode Séquentiel avec Clear
     printf(JAUNE "Mode séquentiel ? (1: Oui / 0: Non) : " RESET);
-    while (scanf("%d", &mon_qcm.mode_sequentiel) != 1 || (mon_qcm.mode_sequentiel != 0 && mon_qcm.mode_sequentiel != 1)) { // scanf("%d", .....) renvoie 1 si c'est bien un nombre
+    while (scanf("%d", &mon_qcm.mode_sequentiel) != 1 || (mon_qcm.mode_sequentiel != 0 && mon_qcm.mode_sequentiel != 1)) {
         while(getchar() != '\n');
-        system("clear"); // On efface la pile d'erreurs
+        system("clear"); 
         printf(ROUGE "Erreur : Tapez 0 ou 1 uniquement !\n" RESET);
         printf(JAUNE "Mode séquentiel ? (1: Oui / 0: Non) : " RESET);
     }
 
     // Sécurité Nombre de Questions avec Clear
     printf(JAUNE "Combien de questions voulez-vous créer ? : " RESET);
-    while (scanf("%d", &nb_questions) != 1 || nb_questions <= 0) { // scanf("%d", .....) renvoie 1 si c'est bien un nombre
+    while (scanf("%d", &nb_questions) != 1 || nb_questions <= 0) {
         while(getchar() != '\n');
-        system("clear"); // On efface la pile d'erreurs
+        system("clear"); 
         printf(ROUGE "Erreur : Entrez un nombre entier supérieur à 0 !\n" RESET);
         printf(JAUNE "Combien de questions voulez-vous créer ? : " RESET);
     }
 
-    //  Ouverture du fichier
+    
     fichier = fopen(nom_fichier, "w");
 
     if (fichier == NULL) {
         printf(ROUGE "Erreur fopen : Impossible de créer le fichier.\n" RESET);
         printf("\nAppuyez sur Entrée pour revenir au menu...");
-        while(getchar() != '\n'); getchar(); //ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
+        while(getchar() != '\n'); getchar();
         return;
     }
     
-    
+    // Ajoute le QCM dans le fichier correspondant à sa catégorie
     FILE *f_cat = NULL;
     if (choix_cat == 1) {
         f_cat = fopen("cat_informatique.txt", "a");
@@ -127,24 +130,25 @@ void creer_qcm() {
     fprintf(fichier, "%d\n", mon_qcm.mode_sequentiel);
     fprintf(fichier, "%d\n", nb_questions);
      
-
+    // Efface la touche 'Entrée' restée en mémoire, puis lit toute la phrase avec ses espaces
     for (int i = 0; i < nb_questions; i++) {
         system("clear");
         printf(VERT "--- Question n°%d / %d ---" RESET "\n", i + 1, nb_questions);
         
         printf("Texte de la question : ");
-        while(getchar() != '\n'); // ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
-        fgets(q.texte_question, 300, stdin); // lit depuis la question depuis  clavier(stdin) car le fichier vient d'être créé en écriture ("w") et il est encore vide
+        while(getchar() != '\n'); 
+        fgets(q.texte_question, 300, stdin);
         
 
-        //sert à créer les choix de reponses que l'étudiant verra
-        for (int j = 0; j < 4; j++) { // on répète 4 fois car 4 reponses max
+        // Boucle 4 fois pour demander et enregistrer les 4 propositions de réponse
+        for (int j = 0; j < 4; j++) { 
             printf("  Réponse %d : ", j + 1);
             fgets(q.choix[j], 100, stdin);
           
         }
 
-        // Sécurité Solution
+        // Sécurité réponse
+        // Si erreur, on vide la mémoire, on nettoie l'écran et on réaffiche proprement la question.
         printf(JAUNE "Numéro de la bonne réponse (1 à 4) : " RESET);
         while (scanf("%d", &q.solution) != 1 || q.solution < 1 || q.solution > 4) {
             while(getchar() != '\n');
@@ -170,16 +174,17 @@ void creer_qcm() {
     printf(VERT "\n%s Succès : Le fichier '%s' a été enregistré ! %s" RESET "\n", FLOCON, nom_fichier, FLOCON);
 
     printf("\nAppuyez sur Entrée pour continuer...");
-    while(getchar() != '\n'); getchar(); //ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
+    while(getchar() != '\n'); getchar();
 }
 
+// Fonction principale de création de QCM
 void mode_enseignant(char *mot_de_passe) {
     char essai[TAILLE];
     int choix_prof = -1;
 
+    // Vérifie si le mot de passe est correct avec strcmp()
     printf(JAUNE "Mot de passe requis : " RESET);
     scanf("%s", essai);
-
     if (strcmp(essai, mot_de_passe) == 0) {
         while (choix_prof != 0) {
             system("clear");
@@ -199,6 +204,7 @@ void mode_enseignant(char *mot_de_passe) {
             printf(ROUGE "0. Retour" RESET "\n");
             printf("Choix : ");
             
+            // sécurité choix du professeur
             if (scanf("%d", &choix_prof) != 1) {
                 while(getchar() != '\n'); 
                 printf(ROUGE "Erreur : Entrez un nombre !\n" RESET);
@@ -207,6 +213,7 @@ void mode_enseignant(char *mot_de_passe) {
                 continue;
             }
 
+            // Redirige vers la bonne action : créer un QCM (1) ou changer le mot de passe avec une déconnexion (2)
             if (choix_prof == 1) {
                 creer_qcm(); 
             } else if (choix_prof == 2) {
@@ -218,17 +225,18 @@ void mode_enseignant(char *mot_de_passe) {
             } else if (choix_prof != 0) {
                 printf(ROUGE "Erreur : Ce choix n'existe pas.\n" RESET);
                 printf("\nAppuyez sur Entrée...");
-                getchar(); getchar(); // Met le programme en pause pour laisser le temps de lire avant que le systeme clear face effet
+                getchar(); getchar();
             }
         }
+    // Si le mot de passe est faux, refuse l'accès et met en pause avant de revenir au menu.    
     } else {
         printf(ROUGE "Acces refuse ! %s\n" RESET, COMETE);
         printf("\nAppuyez sur Entrée pour revenir au menu...");
-        getchar(); getchar(); // Met le programme en pause pour laisser le temps de lire avant que le systeme clear face effet
+        getchar(); getchar();
     }
 }
 
-
+// Fonction principale du mode étudiant
 void mode_etudiant() {
     char nom_qcm[TAILLE];
     char nom_fichier[TAILLE + 4];
@@ -250,7 +258,7 @@ void mode_etudiant() {
     printf(BLEU "║ " JAUNE "|_____| |_|  \\___/|____/___/_/   \\_\\_| \\_| |_|  " BLEU " ║\n" RESET);
     printf(BLEU "╚══════════════════════════════════════════════════╝\n\n" RESET);
 
-    
+    // Sécurité de la saisie et vide le clavier en cas d'erreur
     int choix_cat = -1;
     printf(JAUNE "Choisissez une catégorie pour voir les QCM disponibles :\n" RESET);
     printf("  1. Informatique\n");
@@ -268,7 +276,7 @@ void mode_etudiant() {
     system("clear");
     printf(VERT "    %s QCM DISPONIBLES %s    " RESET "\n\n", ETOILE, ETOILE);
     
-    
+    // Ouvre le fichier de la catégorie choisie en mode lecture seule afin de consulter les QCM existants
     FILE *f_liste = NULL;
     if (choix_cat == 1) {
         f_liste = fopen("cat_informatique.txt", "r");
@@ -300,16 +308,16 @@ void mode_etudiant() {
     if (fichier == NULL) {
         printf(ROUGE "Erreur : Le QCM '%s' n'existe pas.\n" RESET, nom_qcm);
         printf("\nAppuyez sur Entrée pour revenir au menu...");
-        while(getchar() != '\n'); getchar(); //ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
+        while(getchar() != '\n'); getchar();
         return;
     }
 
     //  On lit les réglages au début du fichier 
     fscanf(fichier, "%d", &reglages.points_negatifs);
     fscanf(fichier, "%d", &reglages.mode_sequentiel);
-    fscanf(fichier, "%d", &nb_questions); //nb question va nous servire a l'allocation dynamique
+    fscanf(fichier, "%d", &nb_questions);
 
-    //  On crée le tableau de la taille exacte du nombre de questions
+    // On crée le tableau de la taille exacte du nombre de questions
     UneQuestion *liste = malloc(nb_questions *sizeof(UneQuestion));
     if (liste == NULL) {
         printf(ROUGE "Impossible de charger les questions.\n" RESET);
@@ -317,13 +325,13 @@ void mode_etudiant() {
         return;
     }
 
-    // remplissage du tableau avec les donné du fichier
+    // Boucle pour lire chaque question l'une après l'autre :
     for (int i = 0; i < nb_questions; i++) {
-        fgetc(fichier); // supprime le \n qui est derrier eles chiffres afin de ne pas créer de décalage car fgets s'arrête dès qu'il rencontre un \n donc il le saute 
+        fgetc(fichier); // Avale le "\n" invisible laissé dans le fichier pour permettre au fgets juste apres de bien fonctionner
         
         fgets(liste[i].texte_question, 300, fichier);
         
-
+        // Lit les 4 propositions de réponse l'une après l'autre, puis récupère le numero de la bonne réponse
         for (int j = 0; j < 4; j++) {
             fgets(liste[i].choix[j], 100, fichier);
             
@@ -332,9 +340,9 @@ void mode_etudiant() {
     }
     fclose(fichier); 
 
-    //  On pose les questions à l'étudiant
     float points_par_question = 20.0 / nb_questions; // note sur 20
 
+    //  On pose les questions à l'étudiant
     for (int i = 0; i < nb_questions; i++) {
         int reponse_eleve = -1;
         system("clear");
@@ -343,6 +351,7 @@ void mode_etudiant() {
 
         printf(JAUNE "  [%.2f pt ]\n\n" RESET, points_par_question);
         
+        // Affiche les 4 propositions de réponse numérotées de 1 à 4
         for (int j = 0; j < 4; j++) {
             printf("  %d. %s\n", j + 1, liste[i].choix[j]);
         }
@@ -376,12 +385,12 @@ void mode_etudiant() {
         } else {
             printf(ROUGE "\nMauvaise réponse... %s\n" RESET, COMETE);
             if (reglages.points_negatifs == 1) {
-                note -= (points_par_question / 2); //on enleve la moitié des poins de la questions si la reponses est fausse
+                note -= (points_par_question / 2);
             }
         }
         
         printf("\nAppuyez sur Entrée pour la suite...");
-        while(getchar() != '\n'); getchar(); //ca sert a ignore toute les lettre tapées par erreur jusqu'au prochain appuie de la touche entrée
+        while(getchar() != '\n'); getchar();
     }
 
     
