@@ -16,7 +16,7 @@ int main() {
             printf(ROUGE "Erreur : Vous devez entrer un nombre !\n" RESET);
             printf("\nAppuyez sur Entrée pour continuer...");
             getchar();
-            mon_choix = -1; // on securise pour eviter que l'ordi garde l'ancien chiffre en memoire
+            mon_choix = -1;
         }
         
         //choix de l'utilisateur
