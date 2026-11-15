@@ -104,7 +104,8 @@ void creer_qcm() {
     if (fichier == NULL) {
         printf(ROUGE "Erreur fopen : Impossible de créer le fichier.\n" RESET);
         printf("\nAppuyez sur Entrée pour revenir au menu...");
-        while(getchar() != '\n'); getchar();
+        while(getchar() != '\n');
+        getchar();
         return;
     }
     
@@ -174,7 +175,8 @@ void creer_qcm() {
     printf(VERT "\n%s Succès : Le fichier '%s' a été enregistré ! %s" RESET "\n", FLOCON, nom_fichier, FLOCON);
 
     printf("\nAppuyez sur Entrée pour continuer...");
-    while(getchar() != '\n'); getchar();
+    while(getchar() != '\n');
+    getchar();
 }
 
 // Fonction principale de création de QCM
@@ -308,7 +310,8 @@ void mode_etudiant() {
     if (fichier == NULL) {
         printf(ROUGE "Erreur : Le QCM '%s' n'existe pas.\n" RESET, nom_qcm);
         printf("\nAppuyez sur Entrée pour revenir au menu...");
-        while(getchar() != '\n'); getchar();
+        while(getchar() != '\n');
+        getchar();
         return;
     }
 
@@ -390,7 +393,8 @@ void mode_etudiant() {
         }
         
         printf("\nAppuyez sur Entrée pour la suite...");
-        while(getchar() != '\n'); getchar();
+        while(getchar() != '\n');
+        getchar();
     }
 
     
